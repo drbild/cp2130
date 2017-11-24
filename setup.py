@@ -18,7 +18,7 @@ import sys
 
 setup(
     name = 'cp2130',
-    version = '1.0.0',
+    version = '1.0.1',
     description = 'Library for the Silicon Labs CP2130 USB to SPI Bridge',
     author = 'David R. Bild',
     author_email = 'david@davidbild.org',
