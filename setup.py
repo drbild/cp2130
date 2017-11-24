@@ -46,7 +46,8 @@ setup(
     packages = ['cp2130',
                 'cp2130.chip',
                 'cp2130.data',
-                'cp2130.usb'],
+                'cp2130.usb',
+                'cp2130._utils'],
     install_requires = ['bidict', 'bitstring', 'pyusb', 'six'],
     zip_safe = False
 )
