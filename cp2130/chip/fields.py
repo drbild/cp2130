@@ -76,7 +76,7 @@ class DictField(Field):
 
     def to_python(self, value):
         if value not in self._encoding.inv:
-            raise ValueError("%s is not a valid value for %s")%(value, self.name)
+            raise ValueError("%s is not a valid value for %s"%(value, self.name))
         return self._encoding.inv[value]
 
     def from_python(self, value):
