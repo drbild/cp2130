@@ -28,7 +28,7 @@ def find(vid, pid):
     """
     dev = usb.core.find(idVendor=vid, idProduct=pid)
     if dev is None:
-        raise NoDeviceError("No device with vendor %s and product %s"%(idVendor, idProduct))
+        raise NoDeviceError("No device with vendor %s and product %s"%(vid, pid))
 
     if dev.is_kernel_driver_active(0):
         dev.detach_kernel_driver(0)
