@@ -291,7 +291,7 @@ class SPIChannelCS(SPIChannel):
         if cs_hold:
             raise NotImplementedError("cs_hold is not supported by the CP2130 native chip-select capability.")
         try:
-            self.gpio.cs_enable = ChipSelectControl.ENALBED_EXCLUSIVE
+            self.gpio.cs_enable = ChipSelectControl.ENABLED_EXCLUSIVE
             return op()
         finally:
             self.gpio.cs_enable = ChipSelectControl.DISABLED
