@@ -35,6 +35,8 @@ def find(vid, pid):
 
     dev.get_active_configuration()
 
+    dev.default_timeout = 2000
+
     return PyUSBDevice(dev)
 
 class PyUSBDevice(USBDevice):
