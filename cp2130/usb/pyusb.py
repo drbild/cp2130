@@ -39,6 +39,17 @@ def find(vid, pid):
 
     return PyUSBDevice(dev)
 
+def _retry(func, max_attempts):
+    while True:
+        max_attempts -= 1
+        try:
+            return func()
+        except:
+            if max_attempts > 0:
+                pass
+            else:
+                raise
+
 class PyUSBDevice(USBDevice):
 
     def __init__(self, device):
@@ -60,6 +71,10 @@ class PyUSBDevice(USBDevice):
         """Issues a control request to the underlying device.
 
         """
+        func = lambda: self._control_transfer(bmRequestType, bRequest, wValue, wIndex, wLengthOrData)
+        return _retry(func, max_attempts=5)
+
+    def _control_transfer(self, bmRequestType, bRequest, wValue, wIndex, wLengthOrData):
         response = self.device.ctrl_transfer(bmRequestType, bRequest, wValue, wIndex, wLengthOrData)
         try:
             return response.tostring()
