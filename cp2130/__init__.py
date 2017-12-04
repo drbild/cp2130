@@ -27,8 +27,12 @@ def find(vid=0x10c4, pid=0x87A0):
     """
     from cp2130.chip import CP2130Chip
     from cp2130.core import CP2130
-    from cp2130.usb import pyusb
+
+    try:
+        from cp2130.usb import libusb1 as usb
+    except:
+        from cp2130.usb import pyusb as usb
     
-    dev  = pyusb.find(vid, pid)
+    dev  = usb.find(vid, pid)
     chip = CP2130Chip(dev)
     return CP2130(chip)

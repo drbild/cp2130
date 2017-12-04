@@ -18,11 +18,13 @@ installs all dependencies.
 
 ## Dependencies
 
-The excellent [PyUSB](https://github.com/walac/pyusb) library is used
-to access the USB device. If `PyUSB` not available for your platform,
-a different USB library may be used by implementing the
-`cp2130.usb.USBDevice` interface.  See `cp2130/usb/pyusb.py` for the
-`PyUSB` implementation as an example.
+The [PyUSB](https://github.com/walac/pyusb)
+or [python-libusb1](http://github.com/vpelletier/python-libusb1)
+libraries is used to access the USB device. If neither `PyUSB` nor
+`python-libusb1` is available for your platform, a different USB
+library may be used by implementing the `cp2130.usb.USBDevice`
+interface.  See `cp2130/usb/pyusb.py` and `cp2130/usb/libusb1.py` as
+an examples.
 
 ## Quick-Start
 
@@ -225,7 +227,7 @@ Most users will never need to use this component directly.
 This component is an abstraction over the USB interface used to access
 this CP2130.
 
-Currently only a PyUSB-based backend is supplied.
+Currently `PyUSB` and `python-libusb1` backends are supplied.
 
 ## Contributing
 
