@@ -91,7 +91,7 @@ class CP2130Chip(object, six.with_metaclass(ChipBase)):
 
     def do_in_command(self, cmd):
         data = self.usb_dev.control_transfer(cmd.bm_request_type, cmd.b_request, cmd.w_value, cmd.w_index, cmd.w_length)
-        return cmd.to_register(data)
+        return cmd.to_register(data.tostring())
 
     def do_out_command(self, cmd, register):
         data = cmd.to_data(register)

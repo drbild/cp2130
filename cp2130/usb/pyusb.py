@@ -76,11 +76,7 @@ class PyUSBDevice(USBDevice):
         return _retry(func, max_attempts=5)
 
     def _control_transfer(self, bmRequestType, bRequest, wValue, wIndex, wLengthOrData):
-        response = self.device.ctrl_transfer(bmRequestType, bRequest, wValue, wIndex, wLengthOrData)
-        try:
-            return response.tostring()
-        except:
-            return response
+        return self.device.ctrl_transfer(bmRequestType, bRequest, wValue, wIndex, wLengthOrData)
 
     def read(self, endpoint, size):
         """Reads the requested number of bytes from the specified endpoint.

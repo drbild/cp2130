@@ -72,7 +72,7 @@ class LibUSB1Device(USBDevice):
 
         """
         if type(wLengthOrData) == int:
-            return bytes(self.handle.controlRead(bmRequestType, bRequest, wValue, wIndex, wLengthOrData))
+            return array.array('B', self.handle.controlRead(bmRequestType, bRequest, wValue, wIndex, wLengthOrData))
         else:
             return self.handle.controlWrite(bmRequestType, bRequest, wValue, wIndex, wLengthOrData)
 
