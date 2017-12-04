@@ -14,4 +14,4 @@
 
 from __future__ import absolute_import
 
-from cp2130.usb.usb import NoDeviceError, NoHotplugSupportError, USBDevice
+from cp2130.usb.libusb1.core import *

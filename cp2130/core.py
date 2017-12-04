@@ -79,8 +79,10 @@ class CP2130(object):
         self.channel9  = channel_for(self.gpio9)
         self.channel10 = channel_for(self.gpio10)
 
-    def close(self):
-        self.chip.close()
+
+    @property
+    def usb_device(self):
+        return self.chip.usb_device
 
     @property
     def full_threshold(self):

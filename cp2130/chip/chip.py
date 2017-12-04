@@ -84,36 +84,37 @@ class CP2130Chip(object, six.with_metaclass(ChipBase)):
     ]
 
     def __init__(self, usb_device):
-        self.usb_dev = usb_device
+        self._usb_device = usb_device
 
-    def close(self):
-        self.usb_dev.close()
+    @property
+    def usb_device(self):
+        return self._usb_device
 
     def do_in_command(self, cmd):
-        data = self.usb_dev.control_transfer(cmd.bm_request_type, cmd.b_request, cmd.w_value, cmd.w_index, cmd.w_length)
+        data = self.usb_device.control_transfer(cmd.bm_request_type, cmd.b_request, cmd.w_value, cmd.w_index, cmd.w_length)
         return cmd.to_register(data.tostring())
 
     def do_out_command(self, cmd, register):
         data = cmd.to_data(register)
-        self.usb_dev.control_transfer(cmd.bm_request_type, cmd.b_request, cmd.w_value, cmd.w_index, data)
+        self.usb_device.control_transfer(cmd.bm_request_type, cmd.b_request, cmd.w_value, cmd.w_index, data)
         
     def read(self, size):
         command = struct.pack('<HBBI', 0x0000, 0x00, 0x00, size)
-        self.usb_dev.write(0x01, command)
-        return self.usb_dev.read(0x82, size)
+        self.usb_device.write(0x01, command)
+        return self.usb_device.read(0x82, size)
 
     def write(self, data):
         size = len(data)
         command = struct.pack('<HBBI%ds'%size, 0x0000, 0x01, 0x00, size, data)
-        return self.usb_dev.write(0x01, command)
+        return self.usb_device.write(0x01, command)
 
     def write_read(self, data):
         size = len(data)
         command = struct.pack('<HBBI%ds'%size, 0x0000, 0x02, 0x00, size, data)
-        self.usb_dev.write(0x01, command)
-        return self.usb_dev.read(0x82, size)
+        self.usb_device.write(0x01, command)
+        return self.usb_device.read(0x82, size)
 
     def read_with_rtr(self, size):
         command = struct.pack('<HBBI', 0x0000, 0x04, 0x00, size)
-        self.usb_dev.write(0x01, command)
-        return self.usb_dev.read(0x82, size)
+        self.usb_device.write(0x01, command)
+        return self.usb_device.read(0x82, size)

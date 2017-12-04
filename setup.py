@@ -47,6 +47,7 @@ setup(
                 'cp2130.chip',
                 'cp2130.data',
                 'cp2130.usb',
+                'cp2130.usb.libusb1',
                 'cp2130._utils'],
     install_requires = ['bidict', 'bitstring', 'enum34', 'pyusb', 'libusb1', 'six'],
     zip_safe = False

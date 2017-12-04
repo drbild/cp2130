@@ -15,8 +15,14 @@
 from __future__ import absolute_import
 
 class NoDeviceError(EnvironmentError):
-    """An error raised if no USB device matching the specified criteria is
+    """Raised if no USB device matching the specified criteria is
     found.
+
+    """
+    pass
+
+class NoHotplugSupportError(EnvironmentError):
+    """Raised if USB Hotplug support is missing.
 
     """
     pass
@@ -58,5 +64,12 @@ class USBDevice(object):
     def write(self, endpoint, data):
         """Writes the given data to the specified endpoint.
 
+        """
+        raise NotImplementedError
+
+class HotplugListener(object):
+
+    def stop(self):
+        """Stop listening for hotplug events. 
         """
         raise NotImplementedError

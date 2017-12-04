@@ -14,7 +14,7 @@
 
 from __future__ import absolute_import
 
-from cp2130.usb.usb import NoDeviceError, USBDevice
+from cp2130.usb.usb import NoDeviceError, NoHotplugSupportError, USBDevice
 
 import usb
 
@@ -34,6 +34,9 @@ def find(vid, pid):
         dev.detach_kernel_driver(0)
 
     return PyUSBDevice(dev)
+
+def hotplug(on_plugged, vid, pid):
+    raise NoHotplugSupportError("The PyUSB backend does not support hotplug events.")
 
 def _retry(func, max_attempts):
     while True:

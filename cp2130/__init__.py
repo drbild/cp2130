@@ -31,8 +31,39 @@ def find(vid=0x10c4, pid=0x87A0):
     try:
         from cp2130.usb import libusb1 as usb
     except:
+        raise
         from cp2130.usb import pyusb as usb
     
     dev  = usb.find(vid, pid)
     chip = CP2130Chip(dev)
     return CP2130(chip)
+
+def hotplug(on_plugged, vid=0x10c4, pid=0x87A0):
+    """Register a function to call with each hotplugged CP2130 matching
+    the given vendor id and product id.
+
+    :param: on_plugged A one-argument function to invoke with a
+                       cp1230.core.CP2130 instance for each matching
+                       hotplugged device.
+    :param: vid The vendor id to match.
+    :param: pid The product id to match.
+
+    :return: A cp2130.usb.HotplugListener instance. Call '#stop()' to
+    stop receiving events.
+
+    """
+    from cp2130.chip import CP2130Chip
+    from cp2130.core import CP2130
+
+    try:
+        from cp2130.usb import libusb1 as usb
+    except:
+        import logging
+        logging.getLogger().error("asdf", exc_info=True)
+        from cp2130.usb import pyusb as usb
+
+    def on_new_device(dev):
+        chip = CP2130Chip(dev)
+        on_plugged(CP2130(chip))
+
+    return usb.hotplug(vid, pid, on_new_device)
