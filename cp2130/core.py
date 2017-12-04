@@ -79,6 +79,9 @@ class CP2130(object):
         self.channel9  = channel_for(self.gpio9)
         self.channel10 = channel_for(self.gpio10)
 
+    def close(self):
+        self.chip.close()
+
     @property
     def full_threshold(self):
         """Get or set the FIFO full threshold in bytes.

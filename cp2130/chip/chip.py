@@ -86,6 +86,9 @@ class CP2130Chip(object, six.with_metaclass(ChipBase)):
     def __init__(self, usb_device):
         self.usb_dev = usb_device
 
+    def close(self):
+        self.usb_dev.close()
+
     def do_in_command(self, cmd):
         data = self.usb_dev.control_transfer(cmd.bm_request_type, cmd.b_request, cmd.w_value, cmd.w_index, cmd.w_length)
         return cmd.to_register(data)

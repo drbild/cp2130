@@ -33,10 +33,6 @@ def find(vid, pid):
     if dev.is_kernel_driver_active(0):
         dev.detach_kernel_driver(0)
 
-    dev.get_active_configuration()
-
-    dev.default_timeout = 2000
-
     return PyUSBDevice(dev)
 
 def _retry(func, max_attempts):
@@ -57,6 +53,11 @@ class PyUSBDevice(USBDevice):
 
         """
         self.device = device
+        self.device.get_active_configuration()
+
+    def close(self):
+        usb.util.dispose_resources(self.device)
+        self.device = None
 
     def endpoints(self):
         """Gets all the endpoint addresses supported by the underlying device.

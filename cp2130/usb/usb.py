@@ -31,6 +31,12 @@ class USBDevice(object):
 
     """
 
+    def close(self):
+        """Releases the USB device interface.
+
+        """
+        raise NotImplementedError
+
     def endpoints(self):
         """Gets all the endpoint addresses supported by the underlying device.
 
