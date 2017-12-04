@@ -15,19 +15,3 @@
 from __future__ import absolute_import
 
 from cp2130.usb.usb import NoDeviceError, USBDevice
-
-def find(vid=0x10c4, pid=0x87A0):
-    """Finds the first USB device with the given vendor id and product
-    id.
-
-    Uses the PyUSB library internally to query the USB bus.
-
-    :param: vid The vendor id to match.
-    :param: pid The product id to match.
-    :return: A USBDevice instance wrapping the matched device.
-    :raises: A NoDeviceError error if no matching device is found.
-
-    """
-    import cp2130.usb.pyusb
-    dev = pyusb.find(idVendor, idProduct)
-    return core.CP2130(dev)
