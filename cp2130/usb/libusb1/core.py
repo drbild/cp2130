@@ -71,6 +71,7 @@ class LibUSB1Device(USBDevice, HotpluggedDevice):
         """
         HotpluggedDevice.__init__(self, handle.getDevice())
 
+        self.timeout = 1000
         self.context = context
         self.handle = handle
 
@@ -105,18 +106,18 @@ class LibUSB1Device(USBDevice, HotpluggedDevice):
 
         """
         if type(wLengthOrData) == int:
-            return array.array('B', self.handle.controlRead(bmRequestType, bRequest, wValue, wIndex, wLengthOrData))
+            return array.array('B', self.handle.controlRead(bmRequestType, bRequest, wValue, wIndex, wLengthOrData, timeout=self.timeout))
         else:
-            return self.handle.controlWrite(bmRequestType, bRequest, wValue, wIndex, wLengthOrData)
+            return self.handle.controlWrite(bmRequestType, bRequest, wValue, wIndex, wLengthOrData, timeout=self.timeout)
 
     def read(self, endpoint, size):
         """Reads the requested number of bytes from the specified endpoint.
 
         """
-        return array.array('B', self.handle.bulkRead(endpoint, size))
+        return array.array('B', self.handle.bulkRead(endpoint, size, timeout=self.timeout))
 
     def write(self, endpoint, data):
         """Writes the given data to the specified endpoint.
 
         """
-        return self.handle.bulkWrite(endpoint, data)
+        return self.handle.bulkWrite(endpoint, data, timeout=self.timeout)
