@@ -105,11 +105,35 @@ class gpio_values(Register):
                           LogicLevel.HIGH: 1})
     pattern = [padding(1), level_f(10), level_f(9), level_f(8),
                level_f(7), level_f(6), padding(1), level_f(5),
-               level_f(4), level_f(3), level_f(2), level_f(1), level_f(0), padding(3)]
+               level_f(4), level_f(3), level_f(2), level_f(1),
+               level_f(0), padding(3)]
 
     def level(self, num):
         attr = 'gpio%d_level'%num
         return getattr(self, attr)
+
+class gpio_values_setter(gpio_values):
+    def mask_f(num):
+        return BoolField('gpio%d_mask'%num)
+
+    set_mask_pattern = [padding(1), mask_f(10), mask_f(9), mask_f(8),
+                        mask_f(7), mask_f(6), padding(1), mask_f(5),
+                        mask_f(4), mask_f(3), mask_f(2), mask_f(1),
+                        mask_f(0), padding(3)]
+    
+    pattern = gpio_values.pattern + set_mask_pattern
+
+    def set_level(self, num, level):
+        attr = 'gpio%d_level'%num
+        setattr(self, attr, level)
+
+    def _set_mask(self, num):
+        attr = 'gpio%d_mask'%num
+        setattr(self, attr, True)
+
+    def _set_field(self, index, value):
+        super(gpio_values_setter, self)._set_field(index, value)
+        self._set_mask(10 - index)
     
 class rtr_state(Register):
     active = DictField('active', 'uint:8',

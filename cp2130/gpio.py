@@ -93,8 +93,7 @@ class GPIO(Pin):
 """
   function:      %s
   mode:          %s
-  level:         %s
-  value:         %s"""%(self.function, self.mode, self.level, self.value)
+  value:         %s"""%(self.function, self.mode, self.value)
 
 
     @property
@@ -135,23 +134,7 @@ class GPIO(Pin):
 
     @mode.setter
     def mode(self, mode):
-        level = self.level
-        self.mode_and_level = (mode, level)
-
-    @property
-    def level(self):
-        """Get or set the level of the GPIO. The pin must be configured as an
-        output.
-
-        The property should be equivalent to the :value: property.
-
-        """
-        (_, level) = self.mode_and_level
-        return level
-
-    @level.setter
-    def level(self, level):
-        mode = self.mode
+        level = self.value
         self.mode_and_level = (mode, level)
 
     @property
@@ -167,7 +150,9 @@ class GPIO(Pin):
 
     @value.setter
     def value(self, value):
-        self.level = value
+        reg = registers.gpio_values_setter.default()
+        reg.set_level(self.num, value)
+        self.chip.set_gpio_values(reg)
 
     @property
     def cs_enable(self):
