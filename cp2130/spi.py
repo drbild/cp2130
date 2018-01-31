@@ -90,7 +90,7 @@ class SPIChannel(object):
 
         """
         op = lambda: self.chip.write(data)
-        return self._do(op, data)
+        return self._do(op, cs_hold)
 
     def write_read(self, data, cs_hold = False):
         """Simultaneously writes the specified data to channel and reads the
@@ -102,7 +102,7 @@ class SPIChannel(object):
 
         """
         op = lambda: self.chip.write_read(data)
-        return self._do(op, data)
+        return self._do(op, cs_hold)
 
     @property
     def spi_mode(self):
