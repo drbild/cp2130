@@ -18,13 +18,13 @@ import sys
 
 setup(
     name = 'cp2130',
-    version = '1.1.0',
+    version = '1.1.1',
     description = 'Library for the Silicon Labs CP2130 USB to SPI Bridge',
     author = 'David R. Bild',
     author_email = 'david@davidbild.org',
     license="Apache 2.0",
     url = 'https://github.com/drbild/cp2130',
-    download_url = 'https://github.com/drbild/cp2130/archive/1.1.0.tar.gz',
+    download_url = 'https://github.com/drbild/cp2130/archive/1.1.1.tar.gz',
     keywords = ['usb', 'spi', 'bridge', 'Silicon Labs', 'silabs', 'cp2130', 'cp213x'],
     classifiers = [
         'Development Status :: 5 - Production/Stable',
